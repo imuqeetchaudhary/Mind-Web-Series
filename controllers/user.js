@@ -34,7 +34,8 @@ exports.register2 = promise(async (req, res) => {
         {
             $set: {
                 email: body.email,
-                password: hash
+                password: hash,
+                memberSince: Date.now()
             }
         }
     )
@@ -132,4 +133,33 @@ exports.forgetPassword = promise(async (req, res) => {
     } else {
         throw new Exceptions.BadRequset("Invalid Verification Code")
     }
+})
+
+exports.updateProfile = promise(async (req, res) => {
+    const body = req.body
+
+    if (!body.password) {
+        const updateUser = await User.updateOne(
+            { _id: req.user._id },
+            {
+                $set: {
+                    ...body,
+                }
+            }
+        )
+    }
+    else {
+        const hash = bcrypt.hashSync(body.password, 10)
+        const updateUser = await User.updateOne(
+            { _id: req.user._id },
+            {
+                $set: {
+                    ...body,
+                    password: hash
+                }
+            }
+        )
+    }
+
+    res.status(200).json({ message: "Successfully updated user profile" })
 })

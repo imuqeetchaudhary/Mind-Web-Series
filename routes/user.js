@@ -7,7 +7,8 @@ const { registerSchema1,
     registerSchema2,
     loginSchema,
     verificationCodeSchema,
-    forgetPasswordSchema
+    forgetPasswordSchema,
+    updateProfileSchema
 } = require("../validation/user")
 
 router
@@ -17,5 +18,6 @@ router
     .get("/profile", authentication, user.profile)
     .patch("/send-verification-code", validation(verificationCodeSchema), user.sendVerificationCode)
     .patch("/forget-password", validation(forgetPasswordSchema), user.forgetPassword)
+    .patch("/update-profile", authentication, validation(updateProfileSchema), user.updateProfile)
 
 module.exports = router

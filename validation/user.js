@@ -27,3 +27,9 @@ exports.forgetPasswordSchema = yup.object({
     verificationCode: yup.number().required(),
     password: yup.string().required(),
 })
+
+exports.updateProfileSchema = yup.object({
+    firstName: yup.string(),
+    lastName: yup.string(),
+    password: yup.string().min(5).max(10)
+})

@@ -30,6 +30,9 @@ const userSchema = new schema({
     },
     verificationCode: {
         type: Number
+    },
+    memberSince: {
+        type: Date,
     }
 })
 
