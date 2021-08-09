@@ -17,3 +17,13 @@ exports.loginSchema = yup.object({
     userName: yup.string(),
     password: yup.string().required()
 })
+
+exports.verificationCodeSchema = yup.object({
+    email: yup.string().email().required()
+})
+
+exports.forgetPasswordSchema = yup.object({
+    email: yup.string().email().required(),
+    verificationCode: yup.number().required(),
+    password: yup.string().required(),
+})

@@ -27,6 +27,9 @@ const userSchema = new schema({
     isAdmin: {
         type: Boolean,
         default: false
+    },
+    verificationCode: {
+        type: Number
     }
 })
 

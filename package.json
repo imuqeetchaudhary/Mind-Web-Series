@@ -19,6 +19,7 @@
     "https": "^1.0.0",
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^5.12.14",
+    "nodemailer": "^6.6.3",
     "yup": "^0.32.9"
   }
 }

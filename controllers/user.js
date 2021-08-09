@@ -3,6 +3,7 @@ const bcrypt = require("bcrypt")
 const jwt = require("jsonwebtoken")
 const Exceptions = require("../utils/custom-exceptions")
 const { promise } = require("../middlewares/promises")
+const { sendMail, code } = require("../middlewares/sendMail")
 
 exports.register1 = promise(async (req, res) => {
     const body = req.body
@@ -52,8 +53,8 @@ exports.login = promise(async (req, res) => {
 
     const user = await User.findOne({
         $or: [
-            {email: body.email},
-            {userName: body.userName}
+            { email: body.email },
+            { userName: body.userName }
         ]
     })
     if (!user) throw new Exceptions.CredentialsNotMatched()
@@ -91,4 +92,44 @@ exports.profile = promise(async (req, res) => {
         email: user.email,
         isAdmin: user.isAdmin
     })
+})
+
+exports.sendVerificationCode = promise(async (req, res) => {
+    const body = req.body
+    const user = await User.findOne({ email: body.email })
+    if (!user) throw new Exceptions.NotFound("User not found")
+
+    await User.updateOne(
+        { email: body.email },
+        {
+            $set:
+            {
+                verificationCode: code
+            }
+        }
+    )
+
+    const message = `Dear User ${user.firstName} ${user.lastName}! Your verification code is ${code}.`
+    console.log(message);
+    sendMail(user.email, message, res)
+})
+
+exports.forgetPassword = promise(async (req, res) => {
+    const body = req.body
+
+    const user = await User.findOne({ email: req.body.email })
+    if (!user) throw new Exceptions.NotFound("user not found")
+
+    if (user.verificationCode == body.verificationCode) {
+        const hash = bcrypt.hashSync(body.password, 10);
+        await User.updateOne(
+            { email: body.email },
+            { $set: { password: hash } }
+        )
+        res.status(200).json({
+            message: "Password Saved Successfully"
+        })
+    } else {
+        throw new Exceptions.BadRequset("Invalid Verification Code")
+    }
 })

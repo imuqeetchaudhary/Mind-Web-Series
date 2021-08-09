@@ -16,7 +16,7 @@
 
 ### to register form 2 for a new user
 
-- user/register1 : post
+- user/register1 : patch
 
 ```
 {
@@ -40,3 +40,25 @@
 ### to view the profile of an authenticated user
 
 - user/profile :get (Protected route. Token required)
+
+### to get verification code at user email
+
+- user/send-verificatin-code :patch
+
+```
+{
+    email:
+}
+```
+
+### to forget user password
+
+- user/forget-password :patch
+
+```
+{
+    email:
+    verificationCode:
+    password:
+}
+```
