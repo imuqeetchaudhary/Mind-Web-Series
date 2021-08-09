@@ -32,7 +32,7 @@
 
 ```
 {
-    email OR userName:
+    userName:
     password:
 }
 ```

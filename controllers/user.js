@@ -54,7 +54,7 @@ exports.login = promise(async (req, res) => {
 
     const user = await User.findOne({
         $or: [
-            { email: body.email },
+            { email: body.userName },
             { userName: body.userName }
         ]
     })

@@ -13,8 +13,7 @@ exports.registerSchema2 = yup.object({
 })
 
 exports.loginSchema = yup.object({
-    email: yup.string().email(),
-    userName: yup.string(),
+    userName: yup.string().required(),
     password: yup.string().required()
 })
 
