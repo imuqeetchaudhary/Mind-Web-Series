@@ -13,7 +13,6 @@ const userSchema = new schema({
     userName: {
         type: String,
         require: true,
-        unique: true
     },
     email: {
         type: String,
