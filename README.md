@@ -25,3 +25,14 @@
     password:
 }
 ```
+
+### to login an existing user
+
+- user/login :post
+
+```
+{
+    email OR userName:
+    password:
+}
+```

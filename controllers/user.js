@@ -47,3 +47,33 @@ exports.register2 = promise(async (req, res) => {
     })
 })
 
+exports.login = promise(async (req, res) => {
+    const body = req.body
+
+    const user = await User.findOne({
+        $or: [
+            { email: body.email },
+            { userName: body.userName }
+        ]
+    })
+    if (!user) throw new Exceptions.CredentialsNotMatched()
+
+    const matchedPassword = await bcrypt.compareSync(req.body.password, user.password)
+    if (!matchedPassword) throw new Exceptions.CredentialsNotMatched()
+
+    const token = await jwt.sign({
+        _id: user._id,
+        name: user.name,
+        email: user.email,
+        isAdmin: user.isAdmin
+    }, process.env.ACCESS_TOKEN_SECRET)
+
+    res.status(200).json({
+        token: token,
+        _id: user._id,
+        name: user.name,
+        email: user.email,
+        isAdmin: user.isAdmin
+    })
+})
+
