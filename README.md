@@ -1,5 +1,9 @@
 # Mind Web Series Rest Api
 
+## Backend Deployed Link :
+
+https://mind-web-series-restapi.herokuapp.com/
+
 ## Routes for User
 
 ### to register form 1 for a new user
