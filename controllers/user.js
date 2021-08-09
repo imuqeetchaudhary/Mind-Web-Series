@@ -52,8 +52,8 @@ exports.login = promise(async (req, res) => {
 
     const user = await User.findOne({
         $or: [
-            { email: body.email },
-            { userName: body.userName }
+            {email: body.email},
+            {userName: body.userName}
         ]
     })
     if (!user) throw new Exceptions.CredentialsNotMatched()
@@ -63,7 +63,9 @@ exports.login = promise(async (req, res) => {
 
     const token = await jwt.sign({
         _id: user._id,
-        name: user.name,
+        firstName: user.firstName,
+        lastName: user.lastName,
+        userName: user.userName,
         email: user.email,
         isAdmin: user.isAdmin
     }, process.env.ACCESS_TOKEN_SECRET)
@@ -71,9 +73,22 @@ exports.login = promise(async (req, res) => {
     res.status(200).json({
         token: token,
         _id: user._id,
-        name: user.name,
+        firstName: user.firstName,
+        lastName: user.lastName,
+        userName: user.userName,
         email: user.email,
         isAdmin: user.isAdmin
     })
 })
 
+exports.profile = promise(async (req, res) => {
+    const user = await User.findOne({ email: req.user.email })
+    res.status(200).json({
+        _id: user._id,
+        firstName: user.firstName,
+        lastName: user.lastName,
+        userName: user.userName,
+        email: user.email,
+        isAdmin: user.isAdmin
+    })
+})

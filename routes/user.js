@@ -9,5 +9,6 @@ router
     .post("/register1", validation(registerSchema1), user.register1)
     .post("/register2", validation(registerSchema2), user.register2)
     .post("/login", validation(loginSchema), user.login)
+    .get("/profile", authentication, user.profile)
 
 module.exports = router

@@ -36,3 +36,7 @@
     password:
 }
 ```
+
+### to view the profile of an authenticated user
+
+- user/profile :get (Protected route. Token required)
