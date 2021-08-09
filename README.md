@@ -62,3 +62,15 @@
     password:
 }
 ```
+
+### to update user profile
+
+- user/update-profile :patch (Protected route. Token required)
+
+```
+{
+    firstName:
+    lastName:
+    password:
+}
+```
