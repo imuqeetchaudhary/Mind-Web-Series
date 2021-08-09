@@ -74,3 +74,31 @@
     password:
 }
 ```
+
+## Routes for Journal
+
+### to add a new journal
+
+-journal/add :post (Protected route. Token required)
+
+```
+{
+    journalTitle:
+    journalDescription:
+    entryDate: format ( yyyy-mm-dd )
+}
+```
+
+### to get all journals for a specific user
+
+- journal/get-all :get (Protected route. Token required)
+
+### to get a single journal for a specific user
+
+- journal/get-single :post (Protected route. Token required)
+
+```
+{
+    journalId:
+}
+```
